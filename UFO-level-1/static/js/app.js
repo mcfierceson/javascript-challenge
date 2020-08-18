@@ -25,6 +25,7 @@ var form = d3.select("#form");
 button.on("click", runEnter);
 form.on("submit",runEnter);
 
+
 // Create the function to run for both events
 function runEnter() {
 
@@ -37,8 +38,20 @@ function runEnter() {
   // Get the value property of the input element
   var inputValue = inputElement.property("value");
 
+  var filteredData = tableData.filter(tableData => tableData.datetime === inputValue)
 
-  var filteredData = tableData.filter(tableData => tableData.datetime === inputValue);
-  
   console.log(filteredData);
+
+  d3.select("#ufo-table tbody").remove()
+  d3.select("#ufo-table").append("tbody")
+  var f_tbody = d3.select("tbody");
+
+  filteredData.forEach((filteredData) => {
+    var row = f_tbody.append("tr");
+    Object.entries(filteredData).forEach(([key, value]) => {
+      var cell = row.append("td");
+      cell.text(value);
+    });
+  });
+
 }
